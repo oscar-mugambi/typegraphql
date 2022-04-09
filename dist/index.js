@@ -9,6 +9,7 @@ const type_graphql_1 = require("type-graphql");
 const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const Register_1 = require("./modules/User/Register");
+const User_1 = require("./entities/User");
 const main = async () => {
     const AppDataSource = new typeorm_1.DataSource({
         name: 'default',
@@ -20,7 +21,7 @@ const main = async () => {
         port: 5432,
         synchronize: true,
         logging: true,
-        entities: ['dist/entity/**/*.*'],
+        entities: [User_1.User],
     });
     AppDataSource.initialize()
         .then(() => {

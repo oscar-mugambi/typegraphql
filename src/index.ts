@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
-import { buildSchema, Query, Resolver } from 'type-graphql';
+import { buildSchema } from 'type-graphql';
 import express from 'express';
 import { DataSource } from 'typeorm';
 import { RegisterResolver } from './modules/User/Register';
-// import 'ormconfig.json';
+import { User } from './entities/User';
 
 const main = async () => {
   const AppDataSource = new DataSource({
@@ -17,7 +17,7 @@ const main = async () => {
     port: 5432,
     synchronize: true,
     logging: true,
-    entities: ['dist/entity/**/*.*'],
+    entities: [User],
   });
 
   AppDataSource.initialize()
