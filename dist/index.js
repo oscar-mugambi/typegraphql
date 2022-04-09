@@ -16,13 +16,14 @@ require("reflect-metadata");
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
 const express_1 = __importDefault(require("express"));
+const typeorm_1 = require("typeorm");
 let HelloResolver = class HelloResolver {
     async hello() {
-        return 'Hello world';
+        return await 'Hello World!!';
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String),
+    (0, type_graphql_1.Query)(() => String, { name: 'helloworld', nullable: true }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -30,17 +31,34 @@ __decorate([
 HelloResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], HelloResolver);
-const MainApp = async () => {
+const main = async () => {
+    const AppDataSource = new typeorm_1.DataSource({
+        name: 'default',
+        type: 'postgres',
+        host: 'localhost',
+        username: 'oscar',
+        password: 'password',
+        database: 'graphql',
+        port: 5432,
+        synchronize: true,
+        logging: true,
+        entities: ['dist/entity/**/*.*'],
+    });
+    AppDataSource.initialize()
+        .then(() => {
+        console.log('connected to the database');
+    })
+        .catch((err) => console.log(err));
     const schema = await (0, type_graphql_1.buildSchema)({
         resolvers: [HelloResolver],
     });
-    const apolloServer = new apollo_server_express_1.ApolloServer({
-        schema,
-    });
+    const apolloServer = new apollo_server_express_1.ApolloServer({ schema });
     const app = (0, express_1.default)();
     await apolloServer.start();
     apolloServer.applyMiddleware({ app });
-    app.listen(4002, () => console.log('running'));
+    app.listen(4000, () => {
+        console.log('server started on 4000');
+    });
 };
-MainApp();
-//# sourceMappingURL=app2.js.map
+main();
+//# sourceMappingURL=index.js.map

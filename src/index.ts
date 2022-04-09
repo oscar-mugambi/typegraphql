@@ -2,6 +2,8 @@ import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema, Query, Resolver } from 'type-graphql';
 import express from 'express';
+import { DataSource } from 'typeorm';
+// import 'ormconfig.json';
 
 @Resolver()
 class HelloResolver {
@@ -14,6 +16,25 @@ class HelloResolver {
 }
 
 const main = async () => {
+  const AppDataSource = new DataSource({
+    name: 'default',
+    type: 'postgres',
+    host: 'localhost',
+    username: 'oscar',
+    password: 'password',
+    database: 'graphql',
+    port: 5432,
+    synchronize: true,
+    logging: true,
+    entities: ['dist/entity/**/*.*'],
+  });
+
+  AppDataSource.initialize()
+    .then(() => {
+      console.log('connected to the database');
+    })
+    .catch((err) => console.log(err));
+
   const schema = await buildSchema({
     resolvers: [HelloResolver],
   });
