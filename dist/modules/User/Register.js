@@ -23,9 +23,6 @@ let RegisterResolver = class RegisterResolver {
     async hello() {
         return 'Hello World!!';
     }
-    async name(parent) {
-        return `${parent.firstName} ${parent.lastName}`;
-    }
     async register(firstName, lastName, email, password) {
         const hashedPassword = await bcryptjs_1.default.hash(password, 12);
         const user = await User_1.User.create({
@@ -44,13 +41,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RegisterResolver.prototype, "hello", null);
 __decorate([
-    (0, type_graphql_1.FieldResolver)(),
-    __param(0, (0, type_graphql_1.Root)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [User_1.User]),
-    __metadata("design:returntype", Promise)
-], RegisterResolver.prototype, "name", null);
-__decorate([
     (0, type_graphql_1.Mutation)(() => User_1.User),
     __param(0, (0, type_graphql_1.Arg)('firstName')),
     __param(1, (0, type_graphql_1.Arg)('lastName')),
@@ -61,7 +51,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RegisterResolver.prototype, "register", null);
 RegisterResolver = __decorate([
-    (0, type_graphql_1.Resolver)(User_1.User)
+    (0, type_graphql_1.Resolver)()
 ], RegisterResolver);
 exports.RegisterResolver = RegisterResolver;
 //# sourceMappingURL=Register.js.map

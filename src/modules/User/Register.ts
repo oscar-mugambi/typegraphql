@@ -1,8 +1,8 @@
-import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import bcrypt from 'bcryptjs';
 import { User } from '../../entities/User';
 
-@Resolver(User)
+@Resolver()
 export class RegisterResolver {
   // we have a field for querying
   @Query(() => String, { name: 'helloworld', nullable: true }) // uppercase string because we need to pass the class of the string
@@ -13,11 +13,6 @@ export class RegisterResolver {
 
   // not stored in the database but just in our schema
   // the field doesnt have the column decorator in the
-
-  @FieldResolver()
-  async name(@Root() parent: User) {
-    return `${parent.firstName} ${parent.lastName}`;
-  }
 
   @Mutation(() => User)
   async register(
