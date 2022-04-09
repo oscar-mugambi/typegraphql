@@ -18,11 +18,11 @@ const type_graphql_1 = require("type-graphql");
 const express_1 = __importDefault(require("express"));
 let HelloResolver = class HelloResolver {
     async hello() {
-        return await 'Hello World!!';
+        return 'Hello world';
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String, { name: 'helloworld', nullable: true }),
+    (0, type_graphql_1.Query)(() => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -30,17 +30,17 @@ __decorate([
 HelloResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], HelloResolver);
-const main = async () => {
+const MainApp = async () => {
     const schema = await (0, type_graphql_1.buildSchema)({
         resolvers: [HelloResolver],
     });
-    const apolloServer = new apollo_server_express_1.ApolloServer({ schema });
+    const apolloServer = new apollo_server_express_1.ApolloServer({
+        schema,
+    });
     const app = (0, express_1.default)();
     await apolloServer.start();
     apolloServer.applyMiddleware({ app });
-    app.listen(4000, () => {
-        console.log('server started on 4000');
-    });
+    app.listen(4002, () => console.log('running'));
 };
-main();
-//# sourceMappingURL=app.js.map
+MainApp();
+//# sourceMappingURL=app2.js.map

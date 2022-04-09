@@ -12,17 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
 const apollo_server_express_1 = require("apollo-server-express");
+require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const express_1 = __importDefault(require("express"));
 let HelloResolver = class HelloResolver {
     async hello() {
-        return await 'Hello World!!';
+        return 'hello world';
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String, { name: 'helloworld', nullable: true }),
+    (0, type_graphql_1.Query)(() => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -34,13 +34,13 @@ const main = async () => {
     const schema = await (0, type_graphql_1.buildSchema)({
         resolvers: [HelloResolver],
     });
-    const apolloServer = new apollo_server_express_1.ApolloServer({ schema });
-    const app = (0, express_1.default)();
-    await apolloServer.start();
-    apolloServer.applyMiddleware({ app });
-    app.listen(4000, () => {
-        console.log('server started on 4000');
+    const apolloServer = new apollo_server_express_1.ApolloServer({
+        schema,
     });
+    const app = (0, express_1.default)();
+    apolloServer.start();
+    apolloServer.applyMiddleware({ app });
+    app.listen(3005, () => console.log('hey there'));
 };
 main();
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=app1.js.map
