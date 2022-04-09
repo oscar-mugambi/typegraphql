@@ -32,8 +32,7 @@ let RegisterResolver = class RegisterResolver {
             password: hashedPassword,
         });
         user.save();
-        return firstName;
-        return firstName;
+        return user;
     }
 };
 __decorate([
